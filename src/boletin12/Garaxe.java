@@ -6,7 +6,7 @@
 package boletin12;
 
 import javax.swing.JOptionPane;
-import java.util.Date;
+
 
 /**
  *
@@ -16,7 +16,7 @@ public class Garaxe {
 
     private static int numeroCoches;
     private String matricula;
-    private static double PREZOINICIAL = 0.40;
+    private static final double PREZOINICIAL = 0.40;
     private double tiempo;
     private double ti;
     private double tf;
@@ -24,8 +24,8 @@ public class Garaxe {
     private double prezodev;
     private double prezorec;
 
-    public Garaxe(){
-        
+    public Garaxe() {
+
     }
 
     public double getPrezo() {
@@ -35,6 +35,7 @@ public class Garaxe {
     public void setPrezo(double prezo) {
         this.prezo = prezo;
     }
+
     public double getTi() {
         return ti;
     }
@@ -75,60 +76,53 @@ public class Garaxe {
         this.matricula = matricula;
     }
 
-    public static double getPREZOINICIAL() {
-        return PREZOINICIAL;
-    }
-
-    public static void setPREZOINICIAL(double PREZOINICIAL) {
-        Garaxe.PREZOINICIAL = PREZOINICIAL;
-    }
+ 
 
     public void comprobarPlazas() {
-        if (numeroCoches >= 5) {
-            JOptionPane.showMessageDialog(null, "COMPLETO");
-        } else {
-            JOptionPane.showMessageDialog(null, "PLAZAS DISPOÑIBLES:" + (5 - numeroCoches));
-            String mat;            
+        if (numeroCoches <= 5) {
+            JOptionPane.showMessageDialog(null, "PLAZAS DISPOÑIBLES: " + (5 - numeroCoches));
+            String mat;
             mat = JOptionPane.showInputDialog("Introduza a matrícula do seu coche:");
-            if (this.matricula == null){
-                Garaxe.numeroCoches = numeroCoches++;
-                this.matricula = mat;
-                this.ti = System.currentTimeMillis();               
-            } else if(this.matricula !=null){
-                JOptionPane.showMessageDialog(null, "Plaza xa ocupada. Inténteo de novo ou máis tarde. Disculpe as molestias.");
-            }
-           
+            numeroCoches++;
+            this.matricula = mat;
+            this.ti = System.currentTimeMillis();
+
         }
 
     }
-    public void obterTf(){
+
+    public void obterTf() {
         this.tf = System.currentTimeMillis();
     }
+
     public void calcularPrezo() {
-        this.tiempo= this.getTf()-this.getTi();       
-        double calculo = (this.tiempo /1000)-3 + Garaxe.PREZOINICIAL * 0.20;
-        JOptionPane.showMessageDialog(null, "O prezo é de "+calculo+"€.");
+        this.tiempo = this.getTf() - this.getTi();
+        double calculo = (this.tiempo / 1000) - 3 + (Garaxe.PREZOINICIAL*3) * 0.20;
+        JOptionPane.showMessageDialog(null, "O prezo é de " + calculo + "€.");
         this.prezo = calculo;
     }
-    public void pagar(){        
-        
+
+    public void pagar() {
+
         double p = Double.parseDouble(JOptionPane.showInputDialog(null, "Introduce a cantidade(€), que vai introducir para pagar."));
-        
-            if (this.prezo>p)
-        JOptionPane.showMessageDialog(null, "Crédito insuficente.");
-            else{
-                this.prezodev = this.prezo - p;
-                this.prezorec = p;
-            }
-                        
+
+        if (this.prezo > p) {
+            JOptionPane.showMessageDialog(null, "Crédito insuficente.");
+        } else {
+            this.prezodev = this.prezo - p;
+            this.prezorec = p;
+        }
+
     }
-    public void devolverNulos(){
-        this.matricula=null;
-        Garaxe.numeroCoches=numeroCoches--;
+
+    public void devolverNulos() {
+        this.matricula = null;
+        numeroCoches--;
     }
-    public void factura(){
-       JOptionPane.showMessageDialog(null, "****FACTURA****\n 1. MATRÍCULA: "+this.matricula+""
-               + "\n2. TEMPO: "+this.tiempo+"\n3. PERZO: "+this.prezo+"\n4. CARTOS RECIBIDOS: "+this.prezorec+"\5."
-               + " CARTOS DEVOLTOS: "+this.prezodev+"\n\nGRAZAS POR EMPLEAR O NOSO APARCADOIRO.");
+
+    public void factura() {
+        JOptionPane.showMessageDialog(null, "****FACTURA****\n 1. MATRÍCULA: " + this.matricula + ""
+                + "\n2. TEMPO: " + this.tiempo + "\n3. PERZO: " + this.prezo + "\n4. CARTOS RECIBIDOS: " + this.prezorec + "\n5."
+                + " CARTOS DEVOLTOS: " + Math.abs(this.prezodev) + "\n\nGRAZAS POR EMPLEAR O NOSO APARCADOIRO.");
     }
 }

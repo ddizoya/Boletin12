@@ -24,18 +24,27 @@ public class Boletin12 {
         Garaxe gx4 = new Garaxe();
         Garaxe gx5 = new Garaxe();
         Garaxe aux = new Garaxe();
-        int menu = Integer.parseInt(JOptionPane.showInputDialog(null, " ***MENU***\nSe quere deixar o seu coche no garaxe, prema 1."
-                + "\n Se quere retirar o seu coche, prema 2."));
+        int menu;
+        do{
+        menu = Integer.parseInt(JOptionPane.showInputDialog(null, " ***MENU***\nSe quere deixar o seu coche no garaxe, prema 1."
+                + "\nSe quere retirar o seu coche, prema 2.\nSe preme 0 o programa deixarase de executar."));
 
         switch (menu) {
 
             case 1:
-                if (gx1.getNumeroCoches()<5)
-                gx1.comprobarPlazas();
-                gx2.comprobarPlazas();
-                gx3.comprobarPlazas();
-                gx4.comprobarPlazas();
-                gx5.comprobarPlazas();
+                if (aux.getNumeroCoches()<5){
+                if(gx1.getMatricula()==null)
+                    gx1.comprobarPlazas();
+                else if (gx2.getMatricula()==null)
+                    gx2.comprobarPlazas();
+                else if (gx3.getMatricula()==null)
+                    gx3.comprobarPlazas();
+                else if (gx4.getMatricula()==null)
+                    gx4.comprobarPlazas();
+                else if (gx5.getMatricula()==null)
+                    gx5.comprobarPlazas();
+                }else
+                    JOptionPane.showMessageDialog(null, "NON HAY PLAZAS LIBRES.");
                 break;
 
             case 2:
@@ -66,19 +75,22 @@ public class Boletin12 {
                     gx4.pagar();
                     gx4.factura();
                     gx4.devolverNulos();
-                } else{
+                } else if (ma.equals(gx5.getMatricula())) {
                     gx5.obterTf();
                     gx5.calcularPrezo();
                     gx5.pagar();
                     gx5.factura();
                     gx5.devolverNulos();
-                } break;
+                } else {
+                        JOptionPane.showMessageDialog(null, "MATRÍCULA NON ATOPADA.");
+                        }
+                break;
             
             default:
-                JOptionPane.showConfirmDialog(null, "Cometeu un erro. Inténteo de novo ou máis tarde. Disculpe as molestias.");
+                JOptionPane.showConfirmDialog(null, "Cometeu un erro, ou cerrou o programa. Inténteo de novo ou máis tarde. Disculpe as molestias.");
                 
-
-        }
+            } 
+        } while (menu!=0);
 
     }
 
